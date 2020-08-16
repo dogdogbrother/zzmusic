@@ -1,16 +1,43 @@
 import React from 'react';
-import { HashRouter } from 'react-router-dom'
-import { renderRoutes } from 'react-router-config';
+import {Provider} from 'react-redux';
+
 import { GlobalStyle } from  './style';
-import routes from './routes/index.js';
-import MainHeader from './components/main-header'
+
+import './config/http';
+
+import MainHeader from '@/components/main-header'
+import store from '@/config/dva';
+import MusicCoverBg from '@/base/music-cover-bg'
+import Dialog from '@/components/dialog/login-dialog'
+import Toast from '@/components/toast'
+import PlayMain from '@/layout/play-main'
+import { BrowserRouter  } from 'react-router-dom';
+import { Route, Switch } from "react-router";
+import PlayList from '@/pages/play-list';
+import WangyiSearchList from '@/pages/wangyi-search-list';
 function App() {
   return (
-    <HashRouter>
-      <MainHeader/>
-      <GlobalStyle></GlobalStyle>
-      {renderRoutes (routes)}
-    </HashRouter>
+    <Provider store={store}>
+      {/* 头部 */}
+      <MainHeader/> 
+      {/* 全局样式 */}
+      <GlobalStyle />
+      <BrowserRouter >
+        {/* 内容主区域，不单独写个组件的话app.js内容就太多了 */}
+        <PlayMain>
+          {/* 为了路由比较好查找，我就写在这里了 */}
+          <Switch>
+            <Route exact path="/" component={PlayList}/>
+            <Route exact path="/wangyi-search-list" component={WangyiSearchList}/>
+          </Switch>
+        </PlayMain>
+      </BrowserRouter>
+      <MusicCoverBg />
+      {/* 注册登陆的弹出框 */}
+      <Dialog />
+      {/* 错误提示 */}
+      <Toast />
+    </Provider>
   );
 }
 
