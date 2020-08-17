@@ -41,3 +41,8 @@ export const HotSong = styled.span`
     display: none;
   }
 `
+
+export const MusicList = styled.span`
+  width: 100%;
+  height: 100%;
+`

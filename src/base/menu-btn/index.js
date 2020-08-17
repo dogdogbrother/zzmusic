@@ -4,7 +4,7 @@ import { MenuBtnWrap } from './style'
 import { NavLink } from 'react-router-dom';
 
 const MenuBtn = (props) => {
-  // const { toastStatus, toastText } = props;
+  
   return <MenuBtnWrap>
     <NavLink exact to="/" activeClassName="active">正在播放</NavLink>
     <NavLink exact to="/wangyi-search-list" activeClassName="active">网易云搜索</NavLink>

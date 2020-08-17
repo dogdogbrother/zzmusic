@@ -1,5 +1,4 @@
 import styled from'styled-components';
-import styleVar from '@/styles/style-var';
 
 export const Wrap = styled.div`
   height: 100%;
@@ -28,24 +27,6 @@ export const CoontentRight = styled.div`
   @media (max-width: 960px) {
     display: none;
   }
-`
-
-export const MusicBar = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 80px;
-  box-sizing: border-box;
-  padding-bottom: 15px;
-  color: #fff;
-  @media (max-width: 520px) {
-    position: relative;
-    flex-direction: column;
-  }
-`
-
-export const MusicBarBtn = styled.div`
-  
 `
 
 

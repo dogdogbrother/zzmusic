@@ -3,7 +3,6 @@
  * @author senlin
  */
 
-
 function delay(timout) {
   return new Promise((resolve) => {
     setTimeout(resolve, timout);

@@ -2,6 +2,7 @@ import React from 'react';
 import {Provider} from 'react-redux';
 
 import { GlobalStyle } from  './style';
+import { IconStyle } from './assets/fonts/iconfont';
 
 import './config/http';
 
@@ -20,6 +21,7 @@ function App() {
     <Provider store={store}>
       {/* 头部 */}
       <MainHeader/> 
+      <IconStyle />
       {/* 全局样式 */}
       <GlobalStyle />
       <BrowserRouter >

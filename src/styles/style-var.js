@@ -22,4 +22,7 @@ export default {
   'btn_color_active': '#fff',
   //search-head
   'search_bg_coloe': 'rgba(0, 0, 0, 0.2)',
+  //列表
+  'list_head_line_color': 'rgba(255, 255, 255, 0.8)',
+  'list_item_line_color': 'rgba(255, 255, 255, 0.1)',
 }
