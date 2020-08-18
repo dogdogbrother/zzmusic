@@ -11,3 +11,15 @@ export function toHttps(url) {
   }
   return url.replace('http://', 'https://')
 }
+
+// 补0函数
+export function addZero(s) {
+  return s < 10 ? '0' + s : s
+}
+
+// 把歌曲时长变成 03:15 这样的
+export function durationFormat(value) {
+  let minute = Math.floor(value / 60)
+  let second = Math.floor(value % 60)
+  return `${addZero(minute)}:${addZero(second)}`
+}

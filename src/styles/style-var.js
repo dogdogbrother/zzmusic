@@ -25,4 +25,8 @@ export default {
   //列表
   'list_head_line_color': 'rgba(255, 255, 255, 0.8)',
   'list_item_line_color': 'rgba(255, 255, 255, 0.1)',
+  //进度条
+  'bar_color': 'rgba(255, 255, 255, 0.15)',
+  'line_color': '#fff',
+  'dot_color': '#fff',
 }
