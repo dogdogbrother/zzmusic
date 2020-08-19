@@ -1,4 +1,7 @@
-import React, { useState, useRef } from 'react';
+/**
+ * @description 这里没有把 barMove 和 barUp 注册在全局是个失误我艹了，暂时这样吧，稍后再commit了再改
+ */
+import React, { useState, useRef, useEffect } from 'react';
 import { Wrap, ProgressBar, ProgressInner, ProgressDot, ProgressOuter } from './style';
 import { connect } from 'react-redux';
 
@@ -6,13 +9,21 @@ import { connect } from 'react-redux';
 const dotWidth = 10
 
 const MusicProgress = (props) => {
-  const [moveStatus, setMoveStatus] = useState(false)
+  const { currentDuration, duration, dispatch, setShamTime } = props
+  const [moveStatus, setMoveStatus] = useState(false) 
   const [startX, setStart] = useState(0)
   const [left, setLeft] = useState(0)
-
   const proressRef = useRef();
-  const percentProgressRef = useRef();
+  const percentProgressRef = useRef(); // 缓存进度条
   const proressInner = useRef();
+
+  // 根据监听 currentDuration 当前播放时间除以总时间，得到应该移动的比例，*宽度
+  useEffect(() => {
+    if (moveStatus) return
+    const proportion = currentDuration / duration
+    const distance = Math.floor(proressRef.current.clientWidth * proportion)
+    proressInner.current.style.width = `${distance}px`
+  }, [currentDuration, duration, moveStatus])
 
   // 移动滑块
   function moveSilde(offsetWidth) {
@@ -25,8 +36,20 @@ const MusicProgress = (props) => {
    *                        但是滑动不松手就只会改变时间，只有点击和滑动结束才会改变歌曲，所用需要个变量来判断是否是结束操作。
    */
   function calculatePercent(isEnd = false) {
+    
     const lineWidth = proressRef.current.clientWidth - dotWidth
-    const percent = proressInner.current.clientWidth / lineWidth
+    const percent = proressInner.current.clientWidth / lineWidth // percent 进度条比例
+    if (isEnd) {
+      dispatch({
+        type: 'play/changePercent',
+        payload: {
+          currentDuration: duration * percent
+        }
+      })
+    } else {
+      setShamTime(duration * percent)
+    }
+    
   }
   /**
    * @description 点击进度条的目的就是改变滑道轨块的位置
@@ -46,7 +69,6 @@ const MusicProgress = (props) => {
   }
 
   function barMove(e) {
-    // console.log(e.clientX || e.touches[0].pageX);
     if (!moveStatus) return
     e.preventDefault()
     // endX 是鼠标距离最左侧的x值
@@ -60,7 +82,7 @@ const MusicProgress = (props) => {
     calculatePercent();
   }
   function barUp() {
-    // console.log('这就是AAAAAAAAA');
+    setMoveStatus(false)
   }
   function barDown(e) {
     e.preventDefault()
@@ -85,4 +107,4 @@ const MusicProgress = (props) => {
   </>
 }
 
-export default connect(({toast})=> toast)(MusicProgress)
+export default connect(({play})=> play)(MusicProgress)

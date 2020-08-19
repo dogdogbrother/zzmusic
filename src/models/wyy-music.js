@@ -1,5 +1,5 @@
 /**
- * @description 存放搜索得来的歌曲，以及搜索歌曲相关的HTTP
+ * @description 存放网易云搜索得来的歌曲，以及搜索歌曲相关的HTTP
  * @author senlin
  */
 import axios from 'axios'
@@ -9,7 +9,7 @@ import { LIMIT } from '@/config/constant'
 const WY_MUSIC_LIST_URL = 'wyapi/search?'
 
 const musicModel = {
-  namespace: 'music',
+  namespace: 'wyyMusic',
   state: {
     searchKey: '',
     musics: [],
@@ -37,7 +37,7 @@ const musicModel = {
           }
         })
       }
-      const { offset, searchKey, musics } = yield select(state => state.music)
+      const { offset, searchKey, musics } = yield select(state => state.wyyMusic)
       const { data } = yield call(axios.get, WY_MUSIC_LIST_URL, {
         params: {
           offset: offset,

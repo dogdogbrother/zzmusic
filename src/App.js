@@ -15,7 +15,9 @@ import PlayMain from '@/layout/play-main'
 import { BrowserRouter  } from 'react-router-dom';
 import { Route, Switch } from "react-router";
 import PlayList from '@/pages/play-list';
-import WangyiSearchList from '@/pages/wangyi-search-list';
+import WangyiSearchList from '@/pages/wyy-search';
+import MySearch from '@/pages/my-search'
+
 function App() {
   return (
     <Provider store={store}>
@@ -30,7 +32,8 @@ function App() {
           {/* 为了路由比较好查找，我就写在这里了 */}
           <Switch>
             <Route exact path="/" component={PlayList}/>
-            <Route exact path="/wangyi-search-list" component={WangyiSearchList}/>
+            <Route exact path="/wyy-search" component={WangyiSearchList}/>
+            <Route exact path="/my-search" component={MySearch}/>
           </Switch>
         </PlayMain>
       </BrowserRouter>

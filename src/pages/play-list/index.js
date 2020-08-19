@@ -1,11 +1,14 @@
 import React from 'react';
-import { withRouter } from "react-router-dom";
+import { Wrap } from './style'
+import { connect } from 'react-redux'
+import MusicList from '@/components/music-list'
 
 function Play (props) {
-  return (
-    <div>Play2</div>
-  )
+  const { musics } = props
+  return <Wrap>
+    <MusicList listType={1} musics={musics}/>
+  </Wrap>
 }
 
-const PlayRouter = withRouter(Play)
-export default PlayRouter;
+
+export default connect(({presentPlay}) => presentPlay) (Play);

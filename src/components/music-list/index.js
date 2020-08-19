@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Wrap, ListContent } from './style'
-
+import { durationFormat } from '@/utils/util.js'
+/**
+ * @description 我的播放，网易云搜索，我的搜索都会用到这个组件(我的喜欢后面写)。其中我的播放是不需要加载的，而2个搜索通过把dispatch名字传进来就行了。
+ */
 const MusicList = (props) => {
   const [scrollTop, setScrollTop] = useState(0) // 记录滚动位置，用于下拉加载
   const [lockUp, setLocUp] = useState(true) // 滚动锁定，为了防止多余加载
-  const { musics, dispatch } = props;
-
+  const { musics, dispatch, listType } = props;
   // 这个 useEffect 是监听和生命周期的混合来判断是否下拉加载，稍稍有点绕
   useEffect(() => {
-    // 假如 歌曲列表取余有值代表没有更多了
-    if (musics%30) {
+    // tudo
+    if (musics.length%30) {
       setLocUp(true)
     } else {
       setLocUp(false)
@@ -23,7 +25,7 @@ const MusicList = (props) => {
     if (scrollTop + offsetHeight >= scrollHeight - 50) {
       setLocUp(true)
       dispatch({
-        type: 'music/getMyMusicList',
+        type: 'wyyMusic/getMyMusicList',
       })
     }
   } 
@@ -31,7 +33,7 @@ const MusicList = (props) => {
     dispatch({
       type: 'play/requestMusic',
       payload: {
-        music
+        music,
       }
     })
   }
@@ -40,8 +42,9 @@ const MusicList = (props) => {
       <div className="list-item list-header">
         <span className="list-name">歌曲</span>
         <span className="list-artist">歌手</span>
-        {/* <span class="list-time">时长</span> */}
-        <span className="list-album">专辑</span>
+        {
+          listType === 1 ? <span className="list-time">时长</span> : <span className="list-album">专辑</span>
+        }
       </div>
       {/* 存放歌曲内容的list */}
       <ListContent className="height-60" onScroll={($event) => listScroll($event)}>
@@ -58,8 +61,16 @@ const MusicList = (props) => {
                   </div>
                 </div>
                 <span className="list-artist">{music.singer}</span>
-                {/* 这里根据条件有播放时长或是专辑，这里因为先写搜索，就先这样 */}
-                <span className="list-album">{music.album}</span>
+                {
+                  listType === 1 ? 
+                  <span className="list-time">
+                    {durationFormat(music.duration % 3600)}
+                    <i className="iconfont list-menu-icon-del" style={{fontSize: '40px'}}>&#xe901;</i>
+                  </span> 
+                  :
+                  <span className="list-album">{music.album}</span>
+                }
+                
               </div>
             )
           })
@@ -69,4 +80,4 @@ const MusicList = (props) => {
   )
 }
 
-export default connect(({music})=> music)(MusicList)
+export default connect() (MusicList)

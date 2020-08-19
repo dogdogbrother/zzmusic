@@ -125,6 +125,10 @@ export const Wrap = styled.div`
       position: relative;
 
       .list-menu-icon-del {
+        cursor: pointer;
+        &:hover {
+          color: #fff;
+        }
         display: none;
         position: absolute;
         top: 50%;

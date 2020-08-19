@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MusicProgress from '@/base/music-progress'
 import { connect } from 'react-redux';
 import { Wrap, MusicBtnWrap, ControlPlay, MusicContent } from './style'
 import { durationFormat } from '@/utils/util.js'
 
 const MusicBar = (props) => {
-  const { playing, dispatch, currentIndex, playlist, currentDuration, duration } = props;
+  const { playing, dispatch, currentIndex, playlist, currentDuration, duration, audioEle } = props;
+  const [shamTime, setShamTime] = useState() //作为临时属性存在，就是当滑动轨块时当前时间去变化(不能真的修改播放时间)
   function onControlPlay() {
     if (!playlist.length) return
     dispatch({
@@ -46,10 +47,10 @@ const MusicBar = (props) => {
             <p>欢迎使用zz在线音乐播放器</p>
           }
           <div className="music-bar-time">
-            {durationFormat(currentDuration)}/{durationFormat(duration % 3600)}
+            {durationFormat( shamTime || currentDuration)}/{durationFormat(duration % 3600)}
           </div>
         </div>
-        <MusicProgress></MusicProgress>
+        <MusicProgress setShamTime={setShamTime}></MusicProgress>
       </MusicContent>
     </Wrap>
   )

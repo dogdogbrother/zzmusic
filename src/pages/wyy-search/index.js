@@ -5,7 +5,7 @@ import MusicList from '@/components/music-list'
 import { Input } from '@/styles/style-component.js'
 
 function WangyiSearchList (props) {
-  const { hots, dispatch, searchKey } = props;
+  const { hots, dispatch, searchKey, musics } = props;
   const [searchValue, setSearchValue] = useState('')
   // 初始化搜索热点
   useEffect(() => {
@@ -23,7 +23,7 @@ function WangyiSearchList (props) {
   function enterSearch(e) {
     if (e.keyCode === 13) {
       dispatch({
-        type: 'music/getMyMusicList',
+        type: 'wyyMusic/getMyMusicList',
         payload:{
           searchKey: searchValue,
           isSearch: true
@@ -37,7 +37,7 @@ function WangyiSearchList (props) {
   }
   function onSearch(searchKey) {
     dispatch({
-      type: 'music/getMyMusicList',
+      type: 'wyyMusic/getMyMusicList',
       payload:{
         searchKey,
         isSearch: true
@@ -61,9 +61,9 @@ function WangyiSearchList (props) {
           onKeyUp={enterSearch}
         />
       </Search>
-      <MusicList />
+      <MusicList musics={musics} listType={2}/>
     </Wrap>
   )
 }
 
-export default connect(({hot, music}) => ({...hot, ...music})) (WangyiSearchList);
+export default connect(({hot, wyyMusic}) => ({...hot, ...wyyMusic})) (WangyiSearchList);

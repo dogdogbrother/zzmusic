@@ -6,9 +6,11 @@ import { connect } from 'react-redux';
 import { Wrap, Content, ContentLeft, CoontentRight } from './style'
 import MenuBtn from '@/base/menu-btn'
 import MusicBar from '@/base/music-bar'
+import { musciAction } from '@/utils/play'
 
 const PlayMain = (props) => {
   const playRef = useRef();
+  
   const { children: renderRouters, dispatch } = props;
   useEffect(() => {
     dispatch({
@@ -17,6 +19,7 @@ const PlayMain = (props) => {
         audioEle: playRef && playRef.current
       }
     })
+    new musciAction({dispatch, playRef})
   }, [dispatch, playRef])
   return <Wrap >
     <audio ref={playRef} />
